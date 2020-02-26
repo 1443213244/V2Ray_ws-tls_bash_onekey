@@ -1,62 +1,46 @@
 {
   "log": {
-        "access": "/var/log/v2ray/access.log",
-        "error": "/var/log/v2ray/error.log",
-        "loglevel": "warning"
+    "loglevel": "info",
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log"
+  },
+  "inbounds": [{
+    "port": 21275,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "3af05ae3-9af1-45fb-863c-0df6c354881d",
+          "level": 1,
+          "alterId": 66
+        }
+      ]
     },
-  "inbounds": [
-    {
-      "port": 10086, 
-      "listen": "127.0.0.1", 
-      "tag": "vmess-in", 
-      "protocol": "vmess", 
-      "settings": {
-        "clients": [
-          {
-            "id": "3f3effce-2640-4f29-b95b-a2106df6d96d", 
-            "alterId": 64
-          }
-        ]
-      }, 
-      "streamSettings": {
-        "network": "ws", 
-        "wsSettings": {
-          "path": "/e01ec5ea/"
+    "streamSettings": {
+      "network": "ws",
+      "wsSettings": {
+        "path": "/c1a640b8/",
+        "headers": {
+          "Host": "v2ray.1000du.cc"
         }
       }
-    }
-  ], 
-  "outbounds": [
-    {
-      "protocol": "freedom", 
-      "settings": { }, 
-      "tag": "direct"
-    }, 
-    {
-      "protocol": "blackhole", 
-      "settings": { }, 
-      "tag": "blocked"
-    }
-  ], 
-  "dns": {
-    "servers": [
-      "https+local://1.1.1.1/dns-query",
-	  "1.1.1.1",
-	  "1.0.0.1",
-	  "8.8.8.8",
-	  "8.8.4.4",
-	  "localhost"
-    ]
-  },
+    },
+    "listen": "127.0.0.1"
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },{
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+  }],
   "routing": {
-    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
-        "inboundTag": [
-          "vmess-in"
-        ],
-        "outboundTag": "direct"
+        "ip": ["geoip:private"],
+        "outboundTag": "blocked"
       }
     ]
   }
